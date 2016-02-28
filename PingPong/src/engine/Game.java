@@ -13,7 +13,7 @@ public class Game implements Runnable {
 	private JFrame window;
 	private JPanel panel;
 	
-	public final int width, height, scale, sWidth, sHeight;
+	public /*final*/ int width, height, scale, sWidth, sHeight;
 	
 	private final int fps;
 	
@@ -42,7 +42,7 @@ public class Game implements Runnable {
 		
 		window = new JFrame(title);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setResizable(false);
+//		window.setResizable(false);
 		
 		panel = new JPanel();
 		panel.setPreferredSize(new Dimension(width*scale, height*scale));
@@ -115,6 +115,8 @@ public class Game implements Runnable {
 	}
 	
 	private void render() {
+		sWidth = panel.getWidth();
+		sHeight = panel.getHeight();
 		Graphics g = buffer.getGraphics();
 		
 		g.setColor(bgColor);
