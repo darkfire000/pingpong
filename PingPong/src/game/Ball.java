@@ -16,6 +16,7 @@ public class Ball extends Sprite {
 	
 	private int countDown, countDownMax;
 	private boolean doReset;
+	private Color color;
 	
 	public Ball(Game game, Player p1, Player p2, PlayState ps) {
 		super(0, 0, 4, 4);
@@ -30,6 +31,8 @@ public class Ball extends Sprite {
 		this.p1 = p1;
 		this.p2 = p2;
 		this.ps = ps;
+		
+		color = Color.WHITE;
 
 		reset();
 		
@@ -40,8 +43,8 @@ public class Ball extends Sprite {
 	public void tick() {
 		if(countDown > 0) {
 			countDown--;
-			p1.freeze = true;
-			p2.freeze = true;
+//			p1.freeze = true;
+//			p2.freeze = true;
 			return;
 		}
 		if(doReset) {
@@ -50,8 +53,18 @@ public class Ball extends Sprite {
 			return;
 		}
 
-		p1.freeze = false;
-		p2.freeze = false;
+//		p1.freeze = false;
+//		p2.freeze = false;
+		
+		if(ps.vortex != null) {
+			double dx = x-ps.vortex.x;
+			double dy = y-ps.vortex.y;
+			double dist = Math.sqrt(dx*dx+dy*dy);
+			if(dist <= ps.vortex.radius*2) {
+				if(dy >= 0) speedy -= ps.vortex.getGravity();
+				else speedy += ps.vortex.getGravity();
+			}
+		}
 		
 		x += speedx;
 		y += speedy;
@@ -108,7 +121,7 @@ public class Ball extends Sprite {
 	}
 	
 	public void render(Graphics g) {
-		g.setColor(Color.WHITE);
+		g.setColor(color);
 		if(countDown > 0) g.setColor(Color.RED);
 		g.fillRect((int)Math.rint(x), (int)Math.rint(y), (int)Math.rint(width), (int)Math.rint(height));
 	}

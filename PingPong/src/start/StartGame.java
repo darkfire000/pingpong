@@ -4,6 +4,7 @@ import engine.Game;
 import engine.GameState;
 import game.PlayState;
 import game.StartState;
+import game.TestState;
 import game.VictoryState;
 
 public class StartGame {
@@ -12,7 +13,7 @@ public class StartGame {
 		
 		Game g = new Game(160, 100, 6, "");
 		g.setGameStates(2, new GameState[]{
-				new PlayState(), new VictoryState(), new StartState()
+				new PlayState(), new VictoryState(), new StartState(), new TestState()
 		});
 		g.show();
 		g.start();
