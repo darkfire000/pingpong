@@ -13,12 +13,31 @@ public class Vortex extends Sprite {
 	private double gravity;
 	public boolean remove;
 	
+	private int type;
+	
+	private static final int TYPE_NORMAL = 0;
+	private static final int TYPE_STRONG = 1;
+	private static final int TYPE_WEAK = 2;
+	
 	public Vortex(double x, double y) {
 		super(x, y, 20, 20);
 		radius = width/2;
-		lifetime = 180;
+		lifetime = 160 + (int)(Math.random()*60-30);
 		timeToShift = 10;
-		gravity = 0.4;
+		
+		type = (int)(Math.random()*3);
+		switch(type) {
+		case TYPE_NORMAL:
+			gravity = 0.4;
+			break;
+		case TYPE_STRONG:
+			gravity = 0.6;
+			break;
+		case TYPE_WEAK:
+			gravity = 0.2;
+			radius = 15;
+			break;
+		}
 	}
 	
 	public void tick() {
@@ -40,7 +59,17 @@ public class Vortex extends Sprite {
 	}
 	
 	public void render(Graphics g) {
-		g.setColor(Color.BLUE);
+		switch(type) {
+		case TYPE_NORMAL:
+			g.setColor(Color.BLUE);
+			break;
+		case TYPE_STRONG:
+			g.setColor(Color.RED);
+			break;
+		case TYPE_WEAK:
+			g.setColor(Color.CYAN);
+			break;
+		}
 		
 //		g.drawOval((int)(x-(radius-2*timeToShift/10)), (int)(y-(radius-2*timeToShift/10)), (int)((radius-2*timeToShift/10)*2), (int)((radius-2*timeToShift)*2));
 		
